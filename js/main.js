@@ -20,3 +20,22 @@ let checkLength = function (line , maxLength) {
 
   return true
 }
+
+let createDescriptionPhotos = function (count) {
+  let photos = [];
+  for (let i = 1; i <= count; i++) {
+    photos.push(createDescriptionPhoto(i));
+  };
+  return photos
+}
+
+let createDescriptionPhoto = function (id) {
+  return {
+    id: id,
+    url: `photos/${id}.jpg`,
+    description: 'опинчание фото',
+    likes: getRandomNumber(15, 200), 
+  }
+}
+
+console.log(createDescriptionPhotos(25));
