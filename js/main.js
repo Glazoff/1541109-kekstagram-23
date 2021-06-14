@@ -1,29 +1,29 @@
 const MESSAGE = [
-  "Всё отлично!",
-  "В целом всё неплохо. Но не всё.",
-  "Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.",
-  "Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.",
-  "Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.",
-  "Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!",
+  'Всё отлично!',
+  'В целом всё неплохо. Но не всё.',
+  'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
+  'Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.',
+  'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
+  'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
 ];
 
-const NAME = ["Иван", "Леша", "Женя", "Максим"];
+const NAME = ['Иван', 'Леша', 'Женя', 'Максим'];
 
 let photoId = 1;
 let commentId = 1;
 
-// функция возвращает уникалтный числовой инлдификатор фото
-let getPhotoId = function () {
+// функция возвращает уникальный числовой идентификатор фото
+const getPhotoId = function () {
   return photoId++;
 };
 
-// функция возвращает уникалтный числовой инлдификатор комментария
-let getCommentId = function () {
+// функция возвращает уникальный числовой идентификатор комментария
+const getCommentId = function () {
   return commentId++;
 };
 
 // Функция возвращающая рандомные числа. Формулу для вычислений смотрел тут https://myrusakov.ru/js-random-numbers.html
-let getRandomNumber = function (min, max) {
+const getRandomNumber = function (min, max) {
   if (min >= max) {
     throw new Error();
   } else if (min >= 0 && max > 0) {
@@ -34,17 +34,14 @@ let getRandomNumber = function (min, max) {
 };
 
 // Функция проверяющия длину строчки
-let checkLength = function (line, maxLength) {
-  if (line.length > maxLength) {
-    return false;
-  }
-
-  return true;
+const checkLength = function (line, maxLength) {
+  const check = line.length < maxLength;
+  return check;
 };
 
 // Функции для создания массива из N сгенерированных объектов
-let createDescriptionPhotos = function (count) {
-  let photos = [];
+const createDescriptionPhotos = function (count) {
+  const photos = [];
 
   for (let i = 1; i <= count; i++) {
     photos.push(createDescriptionPhoto());
@@ -53,20 +50,20 @@ let createDescriptionPhotos = function (count) {
   return photos;
 };
 
-let createDescriptionPhoto = function () {
-  let id = getPhotoId();
+const createDescriptionPhoto = function () {
+  const id = getPhotoId();
 
   return {
     id: id,
     url: `photos/${id}.jpg`,
-    description: "опинчание фото",
+    description: 'опинчание фото',
     likes: getRandomNumber(15, 200),
     comments: createCommentsPhotos(15),
   };
 };
 
-let createCommentsPhotos = function (count) {
-  let comments = [];
+const createCommentsPhotos = function (count) {
+  const comments = [];
 
   for (let i = 1; i <= count; i++) {
     comments.push(createCommentsPhoto());
@@ -75,7 +72,7 @@ let createCommentsPhotos = function (count) {
   return comments;
 };
 
-let createCommentsPhoto = function () {
+const createCommentsPhoto = function () {
   return {
     id: getCommentId(),
     avatar: `img/avatar-${getRandomNumber(1, 6)}.svg`,
@@ -84,4 +81,3 @@ let createCommentsPhoto = function () {
   };
 };
 
-createDescriptionPhotos(25);
