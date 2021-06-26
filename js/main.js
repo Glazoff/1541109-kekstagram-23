@@ -10,3 +10,4 @@ import {getRandomNumber,
   createCommentsPhotos,
   createCommentsPhoto
 } from './util.js';
+import './render.js';
