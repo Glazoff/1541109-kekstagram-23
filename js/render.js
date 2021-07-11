@@ -1,4 +1,3 @@
-import {createDescriptionPhotos} from './util.js';
 import {openBigPhoto} from './big-render-photo.js';
 import {getPhotos} from './photo-service.js';
 import {openImgFilters} from './img-filters.js';
@@ -8,35 +7,34 @@ const templatePicture = picture.querySelector('.picture');
 const pictures = document.querySelector('.pictures');
 
 
-
 /** Функция отображения фотографий пользователей */
 const rendersPictures = function (photos) {
   const pictureElements = document.querySelectorAll('.picture');
 
-  pictureElements.forEach(element => {
+  pictureElements.forEach((element) => {
     pictures.removeChild(element);
   });
 
   const newPictures = document.createDocumentFragment();
-  for (let i = 0; i < photos.length; i++){
+  photos.forEach((photo) => {
     const copyTemplatePicture = templatePicture.cloneNode(true);
 
-    copyTemplatePicture.querySelector('.picture__img').src = photos[i].url;
-    copyTemplatePicture.querySelector('.picture__likes').textContent = photos[i].likes;
-    copyTemplatePicture.querySelector('.picture__comments').textContent = photos[i].comments.length;
-    copyTemplatePicture.dataset.id = photos[i].id;
+    copyTemplatePicture.querySelector('.picture__img').src = photo.url;
+    copyTemplatePicture.querySelector('.picture__likes').textContent = photo.likes;
+    copyTemplatePicture.querySelector('.picture__comments').textContent = photo.comments.length;
+    copyTemplatePicture.dataset.id = photo.id;
     newPictures.appendChild(copyTemplatePicture);
-  }
-  pictures.appendChild(newPictures);
+  });
 
+  pictures.appendChild(newPictures);
 };
 
 const openBigPhotoHandler = function (photos) {
 
   /** Функция возвраюащает объект данных фотографии по элементу фотографии */
   const getPhoto = function (pictureElement) {
-    const idPhoto = pictureElement.dataset.id;
-    const curentPhoto = photos.find((photo) => photo.id == idPhoto);
+    const idPhoto = +pictureElement.dataset.id;
+    const curentPhoto = photos.find((photo) => photo.id === idPhoto);
     return curentPhoto;
   };
 

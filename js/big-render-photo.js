@@ -6,40 +6,10 @@ const commentsCount = document.querySelector('.comments-count');
 const socialComments = document.querySelector('.social__comments');
 const photoComment = document.querySelector('#photo-comment').content;
 const socialCaption = document.querySelector('.social__caption');
-const socialCommentCount = document.querySelector('.social__comment-count');
 const body = document.querySelector('body');
 const bigPictureCancel = document.querySelector('.big-picture__cancel');
 const bigPhotoCloseEvent = new Event('close');
 
-const eventListeners = [];
-
-/** Функция открытия полноразмерного изображения */
-const openBigPhoto = function (photo) {
-  bigPicture.classList.remove('hidden');
-
-  bigImg.src = photo.url;
-  likesCount.textContent = photo.likes;
-  commentsCount.textContent = photo.comments.length;
-  socialCaption.textContent = photo.description;
-
-  body.classList.add('modal-open');
-  commentsLoader(photo.comments);
-
-};
-
-bigPictureCancel.addEventListener('click', () => {
-  bigPicture.classList.add('hidden');
-  body.classList.remove('modal-open');
-  bigPicture.dispatchEvent(bigPhotoCloseEvent);
-});
-
-document.addEventListener('keydown', (evt) => {
-  if (evt.key === 'Escape' || evt.key === 'Esc') {
-    bigPicture.classList.add('hidden');
-    body.classList.remove('modal-open');
-    bigPicture.dispatchEvent(bigPhotoCloseEvent);
-  }
-});
 
 /** Функция отображения комментариев к фото */
 const renderPhotoComments = function (comments) {
@@ -56,9 +26,8 @@ const renderPhotoComments = function (comments) {
   socialComments.appendChild(newComments);
 };
 
-
 /** Функция загрузки комментариев */
-const commentsLoader = function (comments) {
+function  commentsLoader (comments) {
   let commentsShowed = 5;
   const commentsLoaderButton = document.querySelector('.comments-loader');
   const showedCommentsCount = document.querySelector('.showed-comments-count');
@@ -91,8 +60,34 @@ const commentsLoader = function (comments) {
     commentsLoaderButton.removeEventListener('click', clickHandler);
     bigPicture.removeEventListener('close', closeHandler );
   });
+}
+
+/** Функция открытия полноразмерного изображения */
+const openBigPhoto = function (photo) {
+  bigPicture.classList.remove('hidden');
+
+  bigImg.src = photo.url;
+  likesCount.textContent = photo.likes;
+  commentsCount.textContent = photo.comments.length;
+  socialCaption.textContent = photo.description;
+
+  body.classList.add('modal-open');
+  commentsLoader(photo.comments);
 };
 
+bigPictureCancel.addEventListener('click', () => {
+  bigPicture.classList.add('hidden');
+  body.classList.remove('modal-open');
+  bigPicture.dispatchEvent(bigPhotoCloseEvent);
+});
+
+document.addEventListener('keydown', (evt) => {
+  if (evt.key === 'Escape' || evt.key === 'Esc') {
+    bigPicture.classList.add('hidden');
+    body.classList.remove('modal-open');
+    bigPicture.dispatchEvent(bigPhotoCloseEvent);
+  }
+});
 
 export {openBigPhoto};
 

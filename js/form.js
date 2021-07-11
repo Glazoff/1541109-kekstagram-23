@@ -54,15 +54,7 @@ const maxCountValidator = function (maxCount, array) {
 
 /** Валидатор уникальности элементов массива: каждый элемент массива должен быть уникальный */
 const uniqueValidator = function (array) {
-  let isUnique = true;
-  array.forEach((item, index) => {
-    array.forEach((_item, _index) => {
-      if (item.toLowerCase() === _item.toLowerCase() && index !== _index) {
-        isUnique = false;
-      }
-    });
-  });
-  return isUnique;
+  return (new Set(array.map((val) => val.toLowerCase()))).size === array.length;
 };
 
 /** Валидатор соотвестсвия элементов массива шаблону */
@@ -70,7 +62,7 @@ const patternValidator = function (array, regExp) {
   if (array[0] === '') {
     return true;
   }
-  return array.some((item) => regExp.test(item));
+  return array.every((item) => regExp.test(item));
 };
 
 /** Функция валидации хештегов */
@@ -92,7 +84,6 @@ hashtagsInput.addEventListener('input', () => {
   } else {
     hashtagsInput.setCustomValidity('');
   }
-  console.log(hashtagsValidator(hashtags));
 });
 
 /**Функция валидации комментариев */
@@ -107,7 +98,6 @@ textDescription.addEventListener('input', () => {
   } else {
     textDescription.setCustomValidity('');
   }
-  console.log(commentsValidator(string));
 });
 
 /** Функция открывающая/закрывающая окно успешной отправки фото  */

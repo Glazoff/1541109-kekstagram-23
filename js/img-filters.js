@@ -5,20 +5,14 @@ const imgFilters = document.querySelector('.img-filters');
 
 const filterByRandom = (photos) => shuffle(photos).slice(0, 10);
 
-const filterByDiscussed = (photos) => {
-  return photos.slice().sort((a, b) => {
-    return b.comments.length - a.comments.length
-  });
-};
+const filterByDiscussed = (photos) => photos.slice().sort((photoA, photoB) => photoB.comments.length - photoA.comments.length);
 
-const filterByDefault = (photos) => {
-  return photos;
-};
+const filterByDefault = (photos) => photos;
 
 const filters = {
   default: filterByDefault,
   random: filterByRandom,
-  discussed: filterByDiscussed
+  discussed: filterByDiscussed,
 };
 
 

@@ -1,14 +1,16 @@
 import {removeClassStartsWith} from './util.js';
+
+const SCALE_DEFAULT_VALUE = 100;
+const SCALE_DEFAULT_STEP = 25;
+const MAX_VALUE = 100;
+const MIN_VALUE = 25;
+
 const photoScaleEditor = function () {
   const scaleControlSmaller = document.querySelector('.scale__control--smaller');
   const scaleControlBigger = document.querySelector('.scale__control--bigger');
   const scaleControlValue = document.querySelector('.scale__control--value');
   const imgUploadPreview = document.querySelector('.img-upload__preview');
 
-  const SCALE_DEFAULT_VALUE = 100;
-  const SCALE_DEFAULT_STEP = 25;
-  const MAX_VALUE = 100;
-  const MIN_VALUE = 25;
 
   let scaleValue = SCALE_DEFAULT_VALUE;
 
@@ -123,7 +125,6 @@ const photoFilterEditer = function () {
   effectsRadios.forEach((effectsRadio) =>  {
     effectsRadio.addEventListener('change', () => {
       applyFilter(effectsRadio.value);
-      console.log(effectsRadio.value);
     });
   });
 };
