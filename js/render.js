@@ -1,31 +1,59 @@
-import {MESSAGE, NAME} from './data.js';
-import {getRandomNumber,
-  checkLength,
-  getPhotoId,
-  photoId,
-  getCommentId,
-  createDescriptionPhotos,
-  createDescriptionPhoto,
-  createCommentsPhotos,
-  createCommentsPhoto
-} from './util.js';
+import {openBigPhoto} from './big-render-photo.js';
+import {getPhotos} from './photo-service.js';
+import {openImgFilters} from './img-filters.js';
 
 const picture = document.querySelector('#picture').content;
 const templatePicture = picture.querySelector('.picture');
 const pictures = document.querySelector('.pictures');
 
-const returnFunction = createDescriptionPhotos();
 
-const newPictures = document.createDocumentFragment();
+/** Функция отображения фотографий пользователей */
+const rendersPictures = function (photos) {
+  const pictureElements = document.querySelectorAll('.picture');
 
-for (let i = 0; i < returnFunction.length; i++){
-  const copyTemplatePicture = templatePicture.cloneNode(true);
+  pictureElements.forEach((element) => {
+    pictures.removeChild(element);
+  });
 
-  copyTemplatePicture.querySelector('.picture__img').src = returnFunction[i].url;
-  copyTemplatePicture.querySelector('.picture__likes').textContent = returnFunction[i].likes;
-  copyTemplatePicture.querySelector('.picture__comments').textContent = returnFunction[i].comments.length;
+  const newPictures = document.createDocumentFragment();
+  photos.forEach((photo) => {
+    const copyTemplatePicture = templatePicture.cloneNode(true);
 
-  newPictures.appendChild(copyTemplatePicture);
-}
+    copyTemplatePicture.querySelector('.picture__img').src = photo.url;
+    copyTemplatePicture.querySelector('.picture__likes').textContent = photo.likes;
+    copyTemplatePicture.querySelector('.picture__comments').textContent = photo.comments.length;
+    copyTemplatePicture.dataset.id = photo.id;
+    newPictures.appendChild(copyTemplatePicture);
+  });
 
-pictures.appendChild(newPictures);
+  pictures.appendChild(newPictures);
+};
+
+const openBigPhotoHandler = function (photos) {
+
+  /** Функция возвраюащает объект данных фотографии по элементу фотографии */
+  const getPhoto = function (pictureElement) {
+    const idPhoto = +pictureElement.dataset.id;
+    const curentPhoto = photos.find((photo) => photo.id === idPhoto);
+    return curentPhoto;
+  };
+
+  pictures.addEventListener('click', (evt) => {
+    const pictureElement = evt.target.closest('.picture');
+    if (pictureElement === null) {
+      return;
+    }
+    evt.preventDefault();
+    const photo = getPhoto(pictureElement);
+    openBigPhoto(photo);
+  });
+};
+
+getPhotos().then((photos) =>  {
+  rendersPictures(photos);
+  openBigPhotoHandler(photos);
+  openImgFilters(photos);
+})
+  .catch(() => alert('ошибка'));
+
+export {rendersPictures};

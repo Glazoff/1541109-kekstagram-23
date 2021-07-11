@@ -1,5 +1,3 @@
-import {MESSAGE, NAME} from './data.js';
-
 // Функция возвращающая рандомные числа. Формулу для вычислений смотрел тут https://myrusakov.ru/js-random-numbers.html
 const getRandomNumber = function (min, max) {
   if (min >= max) {
@@ -17,70 +15,40 @@ const checkLength = function (line, maxLength) {
   return check;
 };
 
-let photoId = 1;
-let commentId = 1;
 
-// функция возвращает уникальный числовой идентификатор фото
-const getPhotoId = function () {
-  return photoId++;
-};
+function removeClassStartsWith (node, className) {
+  [...node.classList].forEach((val) => {
+    if (val.startsWith(className)) {
+      node.classList.remove(val);
+    }
+  });
+}
 
-// функция возвращает уникальный числовой идентификатор комментария
-const getCommentId = function () {
-  return commentId++;
-};
+function shuffle(array) {
+  return array.slice().sort(() => Math.random() - 0.5);
+}
 
-// Функции для создания массива из N сгенерированных объектов
-const createDescriptionPhotos = function (count) {
-  const photos = [];
 
-  for (let i = 1; i <= count; i++) {
-    photos.push(createDescriptionPhoto());
-  }
+function debounce(fn, ms) {
+  let timerId;
 
-  return photos;
-};
+  return function() {
+    if (timerId) {
+      clearTimeout(timerId);
+    }
 
-const createDescriptionPhoto = function () {
-  const id = getPhotoId();
-
-  return {
-    id: id,
-    url: `photos/${id}.jpg`,
-    description: 'опинчание фото',
-    likes: getRandomNumber(15, 200),
-    comments: createCommentsPhotos(15),
+    timerId = setTimeout(() => {
+      fn.apply(this, arguments);
+    } , ms);
   };
-};
 
-const createCommentsPhotos = function (count) {
-  const comments = [];
+}
 
-  for (let i = 1; i <= count; i++) {
-    comments.push(createCommentsPhoto());
-  }
-
-  return comments;
-};
-
-const createCommentsPhoto = function () {
-  return {
-    id: getCommentId(),
-    avatar: `img/avatar-${getRandomNumber(1, 6)}.svg`,
-    message: MESSAGE[getRandomNumber(0, MESSAGE.length - 1)],
-    name: NAME[getRandomNumber(0, NAME.length - 1)],
-  };
-};
 
 export {getRandomNumber,
   checkLength,
-  getPhotoId,
-  photoId,
-  getCommentId,
-  commentId,
-  createDescriptionPhotos,
-  createDescriptionPhoto,
-  createCommentsPhotos,
-  createCommentsPhoto
+  removeClassStartsWith,
+  shuffle,
+  debounce
 };
 
