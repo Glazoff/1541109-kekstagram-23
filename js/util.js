@@ -49,7 +49,7 @@ const createDescriptionPhoto = function () {
     url: `photos/${id}.jpg`,
     description: 'опинчание фото',
     likes: getRandomNumber(15, 200),
-    comments: createCommentsPhotos(15),
+    comments: createCommentsPhotos(getRandomNumber(1, 20)),
   };
 };
 
@@ -72,6 +72,35 @@ const createCommentsPhoto = function () {
   };
 };
 
+function removeClassStartsWith (node, className) {
+  [...node.classList].forEach((v) => {
+    if (v.startsWith(className)) {
+      node.classList.remove(v);
+    }
+  });
+}
+
+function shuffle(array) {
+  return array.slice().sort(() => Math.random() - 0.5);
+}
+
+
+function debounce(f, ms) {
+  let timerId;
+
+  return function() {
+    if (timerId) {
+      clearTimeout(timerId);
+    }
+
+    timerId = setTimeout(() => {
+      f.apply(this, arguments);
+    } , ms);
+  };
+
+}
+
+
 export {getRandomNumber,
   checkLength,
   getPhotoId,
@@ -81,6 +110,9 @@ export {getRandomNumber,
   createDescriptionPhotos,
   createDescriptionPhoto,
   createCommentsPhotos,
-  createCommentsPhoto
+  createCommentsPhoto,
+  removeClassStartsWith,
+  shuffle,
+  debounce
 };
 
