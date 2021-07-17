@@ -1,3 +1,4 @@
+import './util.js';
 import './render.js';
 import './form.js';
 import './big-render-photo.js';
