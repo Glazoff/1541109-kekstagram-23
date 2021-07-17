@@ -5,6 +5,9 @@ import {openImgFilters} from './img-filters.js';
 const picture = document.querySelector('#picture').content;
 const templatePicture = picture.querySelector('.picture');
 const pictures = document.querySelector('.pictures');
+const errorServer = document.querySelector('#error__server').content;
+const errorServerPopup = errorServer.querySelector('.error__server');
+const body = document.querySelector('body');
 
 
 /** Функция отображения фотографий пользователей */
@@ -49,11 +52,17 @@ const openBigPhotoHandler = function (photos) {
   });
 };
 
+/** Функция открывающия окно при ошибки загрузки данных из сервера */
+
+const opneErrorServer = function () {
+  body.appendChild(errorServerPopup);
+};
+
 getPhotos().then((photos) =>  {
   rendersPictures(photos);
   openBigPhotoHandler(photos);
   openImgFilters(photos);
 })
-  .catch(() => alert('ошибка'));
+  .catch(() => opneErrorServer()); //исправил
 
 export {rendersPictures};
