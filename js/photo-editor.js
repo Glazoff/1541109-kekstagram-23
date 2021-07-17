@@ -88,7 +88,7 @@ const photoFilterEditer = function () {
       const sepia = `sepia(${(+value[0]/100).toFixed(1)})`;
       const marvin = `invert(${+value[0]}%)`;
       const phobos = `blur(${((+value[0])*3/100).toFixed(1)}px)`;
-      const heat = `brightness(${((+value[0])*3/100).toFixed(1)})`;
+      const heat = `brightness(${(1 + (+value[0]) *2/100).toFixed(1)})`;
 
       if (effectLevelSlider.classList.contains('hidden')) {
         effectLevelSlider.classList.remove('hidden');

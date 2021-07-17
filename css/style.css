@@ -1416,3 +1416,21 @@ main {
 .hidden {
   display: none;
 }
+
+.error__server {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform:translate(-50%, -50%);
+  width: 600px;
+  padding: 50px 50px;
+
+  font-family: "Open Sans", "Arial", sans-serif;
+  text-align: center;
+  font-weight: 700;
+  font-size: 30px;
+  color: #fafafa;
+
+  background-color: #c00000;
+  border-radius: 10px;
+}

@@ -9,6 +9,8 @@ const socialCaption = document.querySelector('.social__caption');
 const body = document.querySelector('body');
 const bigPictureCancel = document.querySelector('.big-picture__cancel');
 const bigPhotoCloseEvent = new Event('close');
+const hashtagsInput = document.querySelector('.text__hashtags');
+const textDescription = document.querySelector('.text__description');
 
 
 /** Функция отображения комментариев к фото */
@@ -83,6 +85,12 @@ bigPictureCancel.addEventListener('click', () => {
 
 document.addEventListener('keydown', (evt) => {
   if (evt.key === 'Escape' || evt.key === 'Esc') {
+    if (
+      document.activeElement === hashtagsInput ||
+      document.activeElement === textDescription
+    ) {
+      return;
+    }
     bigPicture.classList.add('hidden');
     body.classList.remove('modal-open');
     bigPicture.dispatchEvent(bigPhotoCloseEvent);

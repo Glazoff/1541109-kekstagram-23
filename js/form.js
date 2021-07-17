@@ -21,6 +21,9 @@ const closeErrorPopup = error.querySelector('.error__button');
 uploadFile.addEventListener('change', () => {
   imgUploadOverlay.classList.remove('hidden');
   body.classList.add('modal-open');
+  textDescription.value = '';
+  hashtagsInput.value = '';
+
   photoEditor();
 });
 
@@ -76,10 +79,13 @@ const hashtagsValidator = function (hashtags) {
   );
 };
 
+
 hashtagsInput.addEventListener('input', () => {
-  const value = hashtagsInput.value.trim();
+  const value = hashtagsInput.value;
   const hashtags = value.split(' ');
-  if (!hashtagsValidator(hashtags)) {
+  const filtered = hashtags.filter(Boolean);
+
+  if (!hashtagsValidator(filtered)) {
     hashtagsInput.setCustomValidity('Поле для хештегов не валидное');
   } else {
     hashtagsInput.setCustomValidity('');
@@ -103,6 +109,7 @@ textDescription.addEventListener('input', () => {
 /** Функция открывающая/закрывающая окно успешной отправки фото  */
 const openCloseSuccessPopup = function () {
   body.appendChild(successPopup);
+  body.classList.remove('modal-open');
 
   closeSuccessPopup.addEventListener('click', () => {
     successPopup.remove();

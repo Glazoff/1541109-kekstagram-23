@@ -9,13 +9,6 @@ const getRandomNumber = function (min, max) {
   throw new Error();
 };
 
-// Функция проверяющия длину строчки
-const checkLength = function (line, maxLength) {
-  const check = line.length < maxLength;
-  return check;
-};
-
-
 function removeClassStartsWith (node, className) {
   [...node.classList].forEach((val) => {
     if (val.startsWith(className)) {
@@ -46,7 +39,6 @@ function debounce(fn, ms) {
 
 
 export {getRandomNumber,
-  checkLength,
   removeClassStartsWith,
   shuffle,
   debounce
