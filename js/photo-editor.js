@@ -5,7 +5,7 @@ const SCALE_DEFAULT_STEP = 25;
 const MAX_VALUE = 100;
 const MIN_VALUE = 25;
 
-const photoScaleEditor = function () {
+function photoScaleEditor  () {
   const scaleControlSmaller = document.querySelector('.scale__control--smaller');
   const scaleControlBigger = document.querySelector('.scale__control--bigger');
   const scaleControlValue = document.querySelector('.scale__control--value');
@@ -15,20 +15,20 @@ const photoScaleEditor = function () {
   let scaleValue = SCALE_DEFAULT_VALUE;
 
   /** Функция обновляет значения маштаба изображения  */
-  const setScaleControleValue = () => {
+  function setScaleControleValue  ()  {
     scaleControlValue.value = `${scaleValue}%`;
-  };
+  }
 
   /** Функция отвечающая за установку стиля к изображению */
-  const scaleImgUploadPreview = () => {
+  function scaleImgUploadPreview  () {
     imgUploadPreview.style.transform = `scale(${scaleValue/100})`;
-  };
+  }
 
   /** Функция маштабирует изображения и сохраняет значнеия */
-  const scalePhoto = () => {
+  function scalePhoto  ()  {
     setScaleControleValue();
     scaleImgUploadPreview();
-  };
+  }
 
   scalePhoto();
 
@@ -49,7 +49,7 @@ const photoScaleEditor = function () {
     scaleValue = scaleValue + SCALE_DEFAULT_STEP;
     scalePhoto();
   });
-};
+}
 
 let uiSlider = null;
 
@@ -72,15 +72,15 @@ const photoFilterEditer = function () {
   }
 
   /** Функция принимяющие занчения фильтра к изобажению */
-  const applyValueFilter = (valueFilter) => {
+  function applyValueFilter  (valueFilter)  {
     effectLevelValue = valueFilter;
     imgUploadPreview.style.filter = effectLevelValue;
-  };
+  }
 
   effectLevelSlider.classList.add('hidden');
 
   /** Функция расчитввающая значения задаваемого фильтра */
-  const getScaleValueFilter = (filterName) => {
+  function getScaleValueFilter  (filterName)  {
     effectLevelSlider.noUiSlider.reset();
 
     effectLevelSlider.noUiSlider.on('update', (value) => {
@@ -109,15 +109,15 @@ const photoFilterEditer = function () {
         effectLevelSlider.classList.add('hidden');
       }
     });
-  };
+  }
 
 
-  const applyFilter = (filter) => {
+  function applyFilter  (filter)  {
     /* удаляет ранее дабавленные классы, решает вопрос по смене фильтров */
     removeClassStartsWith(imgUploadPreview,'effects__preview--');
     imgUploadPreview.classList.add(`effects__preview--${filter}`);
     getScaleValueFilter(filter);
-  };
+  }
 
   /* Сбрасывается значения фильтра */
   applyFilter('');
@@ -129,9 +129,9 @@ const photoFilterEditer = function () {
   });
 };
 
-const photoEditor = function() {
+function photoEditor () {
   photoFilterEditer();
   photoScaleEditor();
-};
+}
 
 export {photoEditor};

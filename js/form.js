@@ -1,5 +1,7 @@
 import {photoEditor} from './photo-editor.js';
 
+const MAX_COUNT_HASHTAGS = 5;
+const MAX_COUNT_COMMENTS = 140;
 const uploadFile = document.querySelector('#upload-file');
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
 const body = document.querySelector('body');
@@ -48,36 +50,30 @@ uploadCancel.addEventListener('click', () => {
 });
 
 /** Валидатор максимального количества элемента массива */
-const maxCountValidator = function (maxCount, array) {
-  if (array.length > maxCount) {
-    return false;
-  }
-  return true;
-};
+function maxCountValidator  (maxCount, array) {
+  return array.length <= maxCount;
+}
 
 /** Валидатор уникальности элементов массива: каждый элемент массива должен быть уникальный */
-const uniqueValidator = function (array) {
+function uniqueValidator  (array) {
   return (new Set(array.map((val) => val.toLowerCase()))).size === array.length;
-};
+}
 
 /** Валидатор соотвестсвия элементов массива шаблону */
-const patternValidator = function (array, regExp) {
-  if (array[0] === '') {
-    return true;
-  }
-  return array.every((item) => regExp.test(item));
-};
+function patternValidator  (array, regExp) {
+  return  array[0] === '' ? true : array.every((item) => regExp.test(item));
+}
 
 /** Функция валидации хештегов */
-const hashtagsValidator = function (hashtags) {
+function hashtagsValidator  (hashtags) {
   const regExp = /^#[A-Za-zА-Яа-яЁё0-9]{1,20}$/;
 
   return (
-    maxCountValidator(5, hashtags) &&
+    maxCountValidator(MAX_COUNT_HASHTAGS, hashtags) &&
     uniqueValidator(hashtags) &&
     patternValidator(hashtags, regExp)
   );
-};
+}
 
 
 hashtagsInput.addEventListener('input', () => {
@@ -93,9 +89,9 @@ hashtagsInput.addEventListener('input', () => {
 });
 
 /**Функция валидации комментариев */
-const commentsValidator = function (string) {
-  return maxCountValidator(140, string);
-};
+function commentsValidator  (string) {
+  return maxCountValidator(MAX_COUNT_COMMENTS, string);
+}
 
 textDescription.addEventListener('input', () => {
   const string = textDescription.value;
@@ -107,7 +103,7 @@ textDescription.addEventListener('input', () => {
 });
 
 /** Функция открывающая/закрывающая окно успешной отправки фото  */
-const openCloseSuccessPopup = function () {
+function openCloseSuccessPopup  () {
   body.appendChild(successPopup);
   body.classList.remove('modal-open');
 
@@ -128,10 +124,10 @@ const openCloseSuccessPopup = function () {
       successPopup.remove();
     }
   });
-};
+}
 
 /** Функция открывающая/закрывающая окно не успешной отправки фото  */
-const openCloseErrorPopup = function () {
+function openCloseErrorPopup  () {
   body.appendChild(errorPopup);
   imgUploadOverlay.classList.add('hidden');
   body.classList.remove('modal-open');
@@ -154,7 +150,7 @@ const openCloseErrorPopup = function () {
       errorPopup.remove();
     }
   });
-};
+}
 
 imgUploadForm.addEventListener('submit', (evt) => {
   evt.preventDefault();

@@ -14,7 +14,7 @@ const textDescription = document.querySelector('.text__description');
 
 
 /** Функция отображения комментариев к фото */
-const renderPhotoComments = function (comments) {
+function renderPhotoComments (comments) {
   const newComments = document.createDocumentFragment();
   socialComments.innerHTML = '';
   comments.forEach((comment) => {
@@ -26,7 +26,7 @@ const renderPhotoComments = function (comments) {
     newComments.appendChild(copyComment);
   });
   socialComments.appendChild(newComments);
-};
+}
 
 /** Функция загрузки комментариев */
 function  commentsLoader (comments) {
@@ -47,7 +47,7 @@ function  commentsLoader (comments) {
     return;
   }
 
-  const clickHandler = ()=> {
+  function clickHandler  () {
     commentsShowed +=5;
     renderPhotoComments(comments.slice(0, commentsShowed));
     showedCommentsCount.textContent = commentsShowed;
@@ -55,7 +55,7 @@ function  commentsLoader (comments) {
       commentsLoaderButton.classList.add('hidden');
       showedCommentsCount.textContent = comments.length;
     }
-  };
+  }
 
   commentsLoaderButton.addEventListener('click', clickHandler);
   bigPicture.addEventListener('close', function closeHandler() {
@@ -65,7 +65,7 @@ function  commentsLoader (comments) {
 }
 
 /** Функция открытия полноразмерного изображения */
-const openBigPhoto = function (photo) {
+function openBigPhoto  (photo) {
   bigPicture.classList.remove('hidden');
 
   bigImg.src = photo.url;
@@ -75,7 +75,7 @@ const openBigPhoto = function (photo) {
 
   body.classList.add('modal-open');
   commentsLoader(photo.comments);
-};
+}
 
 bigPictureCancel.addEventListener('click', () => {
   bigPicture.classList.add('hidden');

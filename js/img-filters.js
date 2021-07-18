@@ -1,9 +1,12 @@
 import {shuffle, debounce} from './util.js';
 import {rendersPictures} from './render.js';
 
+const TIME_LOADING_PHOTO = 500;
+const MAX_COUNT_LOADING_PHOTO = 10;
+
 const imgFilters = document.querySelector('.img-filters');
 
-const filterByRandom = (photos) => shuffle(photos).slice(0, 10);
+const filterByRandom = (photos) => shuffle(photos).slice(0, MAX_COUNT_LOADING_PHOTO);
 
 const filterByDiscussed = (photos) => photos.slice().sort((photoA, photoB) => photoB.comments.length - photoA.comments.length);
 
@@ -16,9 +19,9 @@ const filters = {
 };
 
 
-const openImgFilters = (photos) =>{
+function openImgFilters  (photos) {
   const imgFiltersButtons = document.querySelectorAll('.img-filters__button');
-  const debunceRendersPictures = debounce(rendersPictures, 500);
+  const debunceRendersPictures = debounce(rendersPictures, TIME_LOADING_PHOTO);
 
   imgFilters.classList.remove('img-filters--inactive');
 
@@ -34,7 +37,7 @@ const openImgFilters = (photos) =>{
       debunceRendersPictures(filteredPhotos);
     });
   });
-};
+}
 
 export {openImgFilters};
 //

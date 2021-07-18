@@ -11,7 +11,7 @@ const body = document.querySelector('body');
 
 
 /** Функция отображения фотографий пользователей */
-const rendersPictures = function (photos) {
+function rendersPictures  (photos) {
   const pictureElements = document.querySelectorAll('.picture');
 
   pictureElements.forEach((element) => {
@@ -30,16 +30,16 @@ const rendersPictures = function (photos) {
   });
 
   pictures.appendChild(newPictures);
-};
+}
 
-const openBigPhotoHandler = function (photos) {
+function openBigPhotoHandler  (photos) {
 
   /** Функция возвраюащает объект данных фотографии по элементу фотографии */
-  const getPhoto = function (pictureElement) {
+  function getPhoto  (pictureElement) {
     const idPhoto = +pictureElement.dataset.id;
     const curentPhoto = photos.find((photo) => photo.id === idPhoto);
     return curentPhoto;
-  };
+  }
 
   pictures.addEventListener('click', (evt) => {
     const pictureElement = evt.target.closest('.picture');
@@ -50,13 +50,13 @@ const openBigPhotoHandler = function (photos) {
     const photo = getPhoto(pictureElement);
     openBigPhoto(photo);
   });
-};
+}
 
 /** Функция открывающия окно при ошибки загрузки данных из сервера */
 
-const opneErrorServer = function () {
+function opneErrorServer  () {
   body.appendChild(errorServerPopup);
-};
+}
 
 getPhotos().then((photos) =>  {
   rendersPictures(photos);
